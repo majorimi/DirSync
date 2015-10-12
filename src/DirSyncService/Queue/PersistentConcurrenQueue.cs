@@ -7,8 +7,9 @@ namespace DirSyncService.Queue
 	{
 	    private readonly string _queueName;
 	    private readonly MessageQueue _messageQueue;
+		private readonly TimeSpan _readTimeOut = TimeSpan.FromMilliseconds(150);
 
-        public PersistentConcurrenQueue(string queueName)
+		public PersistentConcurrenQueue(string queueName)
         {
             _queueName = queueName;
 
@@ -37,10 +38,10 @@ namespace DirSyncService.Queue
 		{
 		    try
 		    {
-		        var msg = _messageQueue.Receive(TimeSpan.FromMilliseconds(50));
+		        var msg = _messageQueue.Receive(_readTimeOut);
 		        msg.Formatter = new XmlMessageFormatter(new Type[] {typeof (T)});
 
-		        item = (T)msg.Formatter.Read(msg);
+				item = (T)msg.Body;
                 return true;
 		    }
             catch (Exception)

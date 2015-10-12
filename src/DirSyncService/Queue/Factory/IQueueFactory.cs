@@ -1,7 +1,9 @@
-﻿namespace DirSyncService.Queue.Factory
+﻿using DirSyncService.Queue.Factory.Context;
+
+namespace DirSyncService.Queue.Factory
 {
     public interface IQueueFactory
     {
-        IConcurrentQueue<T> CreateConcurrentQueue<T>();
+        IConcurrentQueue<T> CreateConcurrentQueue<T>(QueueFactoryContext context);
     }
 }

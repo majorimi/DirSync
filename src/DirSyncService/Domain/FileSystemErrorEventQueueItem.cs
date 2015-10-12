@@ -5,15 +5,24 @@ namespace DirSyncService
     [Serializable()]
     public class FileSystemErrorEventQueueItem : FileSystemEventQueueItem
     {
-        public DateTime LastProcessTime { get; private set; }
+        public DateTime LastProcessTime { get; set; }
 
-        public Exception ProcessException { get; private set; }
+        public string ProcessException { get; set; }
+
+		/// <summary>
+		/// Default constructor for serialize only!
+		/// </summary>
+		public FileSystemErrorEventQueueItem()
+		{}
 
         public FileSystemErrorEventQueueItem(FileSystemEventQueueItem eventQueueItem, Exception ex)
-            : base(eventQueueItem.EventArgs)
+            : base()
         {
-            base.TriedToProcess = eventQueueItem.TriedToProcess;
-            ProcessException = ex;
+			base.EventArgs = eventQueueItem.EventArgs;
+			base.TriedToProcess = eventQueueItem.TriedToProcess;
+
+			TriedToProcess = eventQueueItem.TriedToProcess;
+            ProcessException = ex.ToString();
             LastProcessTime = DateTime.Now;
         }
     }

@@ -1,11 +1,14 @@
 ﻿using DirSyncService.FileSystem.Watcher;
+using DirSyncService.Queue;
 
 namespace DirSyncService.FileSystem.Handler
 {
     public interface IFileSystemEventHandler
     {
-        IFileSystemEventWatcher EventWatcher { get; }
+		FileSystemEventWatcherBase EventWatcher { get; }
 
-        void Process();
+		IConcurrentQueue<FileSystemErrorEventQueueItem> ProcessErrors { get; }
+
+		void Process();
     }
 }

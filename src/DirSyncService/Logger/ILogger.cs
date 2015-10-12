@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DirSyncService.FileSystem.Watcher
+namespace DirSyncService.Logger
 {
-    public abstract class FileSystemWatcherBase
-    {
-    }
+	public interface ILogger
+	{
+	}
 }

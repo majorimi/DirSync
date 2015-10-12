@@ -48,13 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\DirSyncConfiguration.cs" />
     <Compile Include="Domain\FileSystemErrorEventQueueItem.cs" />
+    <Compile Include="Domain\FileSystemChangeEvent.cs" />
+    <Compile Include="Domain\FileSystemRenameEvent.cs" />
     <Compile Include="Domain\FileSystemEventQueueItem.cs" />
+    <Compile Include="FileSystem\FileSystemEventManager.cs" />
+    <Compile Include="FileSystem\Handler\FolderEventHandler.cs" />
     <Compile Include="FileSystem\Handler\FileSystemEventHandlerFactory.cs" />
-    <Compile Include="FileSystem\Watcher\FileSystemWatcherBase.cs" />
-    <Compile Include="FileSystem\Watcher\FileWatcher.cs" />
-    <Compile Include="FileSystem\Watcher\FolderWatcher.cs" />
-    <Compile Include="FileSystem\Watcher\IFileSystemEventWatcher.cs" />
+    <Compile Include="FileSystem\Handler\FileEventHandler.cs" />
+    <Compile Include="FileSystem\Watcher\FileSystemEventWatcherBase.cs" />
+    <Compile Include="FileSystem\Watcher\FileEventWatcher.cs" />
+    <Compile Include="FileSystem\Watcher\FolderEventWatcher.cs" />
     <Compile Include="FileSystem\Handler\IFileSystemEventHandler.cs" />
     <Compile Include="FolderSyncService.cs">
       <SubType>Component</SubType>
@@ -68,8 +73,10 @@
     <Compile Include="Installer\DirSyncInstaller.Designer.cs">
       <DependentUpon>DirSyncInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Queue\Factory\FilePoisoningQueueFactory.cs" />
-    <Compile Include="Queue\Factory\FolderPoisoningQueueFactory.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Queue\Factory\Context\MsmqFactoryContext .cs" />
+    <Compile Include="Queue\Factory\Context\QueueFactoryContext.cs" />
+    <Compile Include="Queue\Factory\MsmqFactory.cs" />
     <Compile Include="Queue\Factory\MemoryQueueFactory.cs" />
     <Compile Include="Queue\IConcurrentQueue.cs" />
     <Compile Include="Program.cs" />
