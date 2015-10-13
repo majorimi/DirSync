@@ -6,7 +6,7 @@ namespace DirSyncService.Domain
     [Serializable()]
     public class FileSystemEventQueueItem
     {
-        public FileSystemChangeEvent EventArgs { get; set; }
+        public FileSystemChangeEvent ChangeEvent { get; set; }
 
         public int TriedToProcess { get;  set; }
 
@@ -18,7 +18,7 @@ namespace DirSyncService.Domain
 
         public FileSystemEventQueueItem(FileSystemEventArgs eventArgs)
         {
-            EventArgs = FileSystemChangeEvent.Create(eventArgs);
+            ChangeEvent = FileSystemChangeEvent.Create(eventArgs);
         }
 
         public int Tried()

@@ -1,6 +1,7 @@
 ﻿using DirSyncService.Queue;
 using System.IO;
 using DirSyncService.Domain;
+using DirSyncService.Logging;
 
 namespace DirSyncService.FileSystem.Watcher
 {
@@ -39,7 +40,7 @@ namespace DirSyncService.FileSystem.Watcher
 
 		private void FileSystemWatcherError(object sender, ErrorEventArgs e)
 		{
-			//log...
-		}
+			Logger.Current.Fatal($"An error occurred in File System Watcher: {this.GetType().Name} may be file system event lost. Exception: {e.GetException()}");
+        }
 	}
 }

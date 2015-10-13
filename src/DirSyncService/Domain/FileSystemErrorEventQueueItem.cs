@@ -18,7 +18,7 @@ namespace DirSyncService.Domain
         public FileSystemErrorEventQueueItem(FileSystemEventQueueItem eventQueueItem, Exception ex)
             : base()
         {
-			base.EventArgs = eventQueueItem.EventArgs;
+			base.ChangeEvent = eventQueueItem.ChangeEvent;
 			base.TriedToProcess = eventQueueItem.TriedToProcess;
 
 			TriedToProcess = eventQueueItem.TriedToProcess;

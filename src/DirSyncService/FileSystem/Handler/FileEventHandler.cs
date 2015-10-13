@@ -5,6 +5,7 @@ using System.Threading;
 using System.IO;
 using DirSyncService.Config;
 using DirSyncService.Domain;
+using DirSyncService.Logging;
 
 namespace DirSyncService.FileSystem.Handler
 {
@@ -45,7 +46,7 @@ namespace DirSyncService.FileSystem.Handler
 					else
 					{
 						ProcessErrors.Enqueue(new FileSystemErrorEventQueueItem(queueItem, ex));
-						//log
+						Logger.Current.Error($"{this.GetType().Name} failed to sync file system event. Handler reached the maximum number of retrying event was sent to the poison queue. Exception: {ex.ToString()}");
 					}
 				}
 			}
@@ -53,9 +54,9 @@ namespace DirSyncService.FileSystem.Handler
 
 		private void HandleFileChanges(FileSystemEventQueueItem queueItem)
 		{
-			var filePath = MapSourceFileToTargetFilePath(queueItem.EventArgs.FullPath);
+			var filePath = MapSourceFileToTargetFilePath(queueItem.ChangeEvent.FullPath, queueItem.ChangeEvent.ChangeType);
 
-			switch (queueItem.EventArgs.ChangeType)
+			switch (queueItem.ChangeEvent.ChangeType)
 			{
 				case WatcherChangeTypes.Created:
 					{
@@ -88,12 +89,12 @@ namespace DirSyncService.FileSystem.Handler
 						break;
 					}
 				case WatcherChangeTypes.Changed:
-					File.Copy(queueItem.EventArgs.FullPath, filePath, true);
+					File.Copy(queueItem.ChangeEvent.FullPath, filePath, true);
 					break;
 				case WatcherChangeTypes.Renamed:
 					{
-						var renamedEventArgs = (FileSystemRenameEvent)queueItem.EventArgs;
-						var mappedPath = MapSourceFileToTargetFilePath(renamedEventArgs.OldFullPath);
+						var renamedEventArgs = (FileSystemRenameEvent)queueItem.ChangeEvent;
+						var mappedPath = MapSourceFileToTargetFilePath(renamedEventArgs.OldFullPath, queueItem.ChangeEvent.ChangeType);
 						if (File.Exists(mappedPath) && !File.Exists(filePath))
 						{
 							File.Move(mappedPath, filePath);
@@ -107,13 +108,13 @@ namespace DirSyncService.FileSystem.Handler
 			}
 		}
 
-		private string MapSourceFileToTargetFilePath(string sourceFileFullPath)
+		private string MapSourceFileToTargetFilePath(string sourceFileFullPath, WatcherChangeTypes changeType)
 		{
 			FileInfo fi = new FileInfo(sourceFileFullPath);
 			string internalPath = fi.FullName.Replace(DirSyncConfiguration.SourceDir.FullName, string.Empty).Replace(fi.Name, string.Empty);
 
 			string fullDir = Path.Combine(DirSyncConfiguration.TargetDir.FullName, internalPath);
-			if (!Directory.Exists(fullDir))
+			if (changeType != WatcherChangeTypes.Deleted &&  !Directory.Exists(fullDir))
 				Directory.CreateDirectory(fullDir);
 
 			return Path.Combine(fullDir, fi.Name);

@@ -47,7 +47,7 @@ namespace DirSyncService.Config
 
 		public static int MaxTrying
 		{
-			get { return 10; }
+			get { return Convert.ToInt32(ConfigurationManager.AppSettings["MaximumRetry"]); }
 		}
 
 

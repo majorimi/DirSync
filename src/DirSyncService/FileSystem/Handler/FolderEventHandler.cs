@@ -5,6 +5,7 @@ using System.Threading;
 using System.IO;
 using DirSyncService.Config;
 using DirSyncService.Domain;
+using DirSyncService.Logging;
 
 namespace DirSyncService.FileSystem.Handler
 {
@@ -45,7 +46,7 @@ namespace DirSyncService.FileSystem.Handler
 					else
 					{
 						ProcessErrors.Enqueue(new FileSystemErrorEventQueueItem(queueItem, ex));
-						//log
+						Logger.Current.Error($"{this.GetType().Name} failed to sync file system event. Handler reached the maximum number of retrying event was sent to the poison queue. Exception: {ex.ToString()}");
 					}
 				}
 			}
@@ -53,15 +54,15 @@ namespace DirSyncService.FileSystem.Handler
 
 		private void HandleFolderChanges(FileSystemEventQueueItem queueItem)
 		{
-			var folderPath = MapSourceDirToTargetDirPath(queueItem.EventArgs.FullPath);
+			var folderPath = MapSourceDirToTargetDirPath(queueItem.ChangeEvent.FullPath);
 
-			switch (queueItem.EventArgs.ChangeType)
+			switch (queueItem.ChangeEvent.ChangeType)
 			{
 				case WatcherChangeTypes.Created:
 					{
 						if (!Directory.Exists(folderPath))
 						{
-							Directory.CreateDirectory(MapSourceDirToTargetDirPath(queueItem.EventArgs.FullPath));
+							Directory.CreateDirectory(MapSourceDirToTargetDirPath(queueItem.ChangeEvent.FullPath));
 						}
 						break;
 					}
@@ -76,7 +77,7 @@ namespace DirSyncService.FileSystem.Handler
 								if (!Directory.Exists(backUpPath))
 									Directory.CreateDirectory(backUpPath);
 
-								Directory.Move(folderPath, Path.Combine(backUpPath, queueItem.EventArgs.Name));
+								di.MoveTo(Path.Combine(backUpPath, queueItem.ChangeEvent.Name));
 							}
 							else
 							{
@@ -87,7 +88,7 @@ namespace DirSyncService.FileSystem.Handler
 					}
 				case WatcherChangeTypes.Renamed:
 					{
-						var renamedEventArgs = (FileSystemRenameEvent)queueItem.EventArgs;
+						var renamedEventArgs = (FileSystemRenameEvent)queueItem.ChangeEvent;
 						var mappedPath = MapSourceDirToTargetDirPath(renamedEventArgs.OldFullPath);
 						if (Directory.Exists(mappedPath) && !Directory.Exists(folderPath))
 						{
