@@ -3,6 +3,7 @@ using DirSyncService.Queue;
 using DirSyncService.Queue.Factory;
 using DirSyncService.Queue.Factory.Context;
 using System.Collections.Generic;
+using DirSyncService.Domain;
 
 namespace DirSyncService.FileSystem.Handler
 {

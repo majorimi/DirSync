@@ -1,4 +1,5 @@
-﻿using DirSyncService.FileSystem.Watcher;
+﻿using DirSyncService.Domain;
+using DirSyncService.FileSystem.Watcher;
 using DirSyncService.Queue;
 
 namespace DirSyncService.FileSystem.Handler

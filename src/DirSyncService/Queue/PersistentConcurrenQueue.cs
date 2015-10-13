@@ -25,8 +25,14 @@ namespace DirSyncService.Queue
 		{
 			get
 			{
-				throw new NotImplementedException();
-			}
+                var x = _messageQueue.GetMessageEnumerator2();
+                int iCount = 0;
+                while (x.MoveNext())
+                {
+                    iCount++;
+                }
+                return iCount;
+            }
 		}
 
 		public void Enqueue(T item)

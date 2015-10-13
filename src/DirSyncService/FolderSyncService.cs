@@ -3,6 +3,7 @@ using System.Threading;
 using DirSyncService.Config;
 using DirSyncService.FileSystem.Handler;
 using DirSyncService.FileSystem;
+using DirSyncService.Logging;
 
 namespace DirSyncService
 {
@@ -13,43 +14,65 @@ namespace DirSyncService
 		private readonly AutoResetEvent AutoReset = new AutoResetEvent(false);
 		private readonly FileSystemEventManager fileSystemEventManager;
 
-		public FolderSyncService()
+	    public FolderSyncService()
+	    {
+	        log4net.Config.XmlConfigurator.Configure();
+
+#if DEBUG
+	        Logger.Current = log4net.LogManager.GetLogger("DirSyncDebug");
+#else
+	        Logger.Current = log4net.LogManager.GetLogger("DirSync");
+#endif
+
+            InitializeComponent();
+	        fileSystemEventManager = FileSystemEventHandlerFactory.Init();
+	    }
+
+	    public void Start()
 		{
-			InitializeComponent();
-			fileSystemEventManager = FileSystemEventHandlerFactory.Init();
+            Logger.Current.Info("Windows service is starting");
+
+            OnStart(null);
+
+            Logger.Current.Info("Windows service started");
         }
 
-		public void Start()
-		{
-			OnStart(null);
-		}
-
-		protected override void OnStart(string[] args)
+        protected override void OnStart(string[] args)
 		{
 			if (DirSyncConfiguration.SourceDir.Exists && DirSyncConfiguration.TargetDir.Exists)
 			{
-				Thread th = new Thread(Sync);
-				th.IsBackground = true;
-				th.Name = "FolderSyncService thread";
+			    Thread th = new Thread(Sync)
+			    {
+			        IsBackground = true,
+			        Name = "FolderSyncService thread"
+			    };
 
-				_isRunnig = true;
+			    _isRunnig = true;
 				th.Start();
 			}
 		}
 
 		protected override void OnStop()
 		{
-			_isRunnig = false;
-			AutoReset.Set();
-		}
+            Logger.Current.Info("Windows service is stopping");
 
-		private void Sync()
+            _isRunnig = false;
+			AutoReset.Set();
+
+            Logger.Current.Info("Windows service stopped");
+        }
+
+        private void Sync()
 		{
 			while (_isRunnig)
 			{
-				fileSystemEventManager.ProcessEvents();
+                Logger.Current.Debug("Start to process file system events");
 
-				AutoReset.WaitOne(WaitTime);
+                fileSystemEventManager.ProcessEvents();
+
+                Logger.Current.Debug("File system events processed");
+
+                AutoReset.WaitOne(WaitTime);
 			}
 		}
 	}

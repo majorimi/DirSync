@@ -1,5 +1,6 @@
 ﻿using DirSyncService.Queue;
 using System.IO;
+using DirSyncService.Domain;
 
 namespace DirSyncService.FileSystem.Watcher
 {

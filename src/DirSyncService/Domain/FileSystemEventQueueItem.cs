@@ -1,8 +1,7 @@
-﻿using DirSyncService.Domain;
-using System;
+﻿using System;
 using System.IO;
 
-namespace DirSyncService
+namespace DirSyncService.Domain
 {
     [Serializable()]
     public class FileSystemEventQueueItem

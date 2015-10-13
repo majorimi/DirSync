@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DirSyncService
+namespace DirSyncService.Domain
 {
     [Serializable()]
     public class FileSystemErrorEventQueueItem : FileSystemEventQueueItem

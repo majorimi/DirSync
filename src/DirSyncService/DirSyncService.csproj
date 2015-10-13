@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -73,7 +77,8 @@
     <Compile Include="Installer\DirSyncInstaller.Designer.cs">
       <DependentUpon>DirSyncInstaller.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Queue\Factory\Context\MsmqFactoryContext .cs" />
     <Compile Include="Queue\Factory\Context\QueueFactoryContext.cs" />
     <Compile Include="Queue\Factory\MsmqFactory.cs" />
@@ -89,6 +94,7 @@
     <None Include="App.config" />
     <None Include="Installer\Install.bat" />
     <None Include="Installer\UnInstall.bat" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
