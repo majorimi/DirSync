@@ -57,6 +57,12 @@
     <Compile Include="Domain\FileSystemChangeEvent.cs" />
     <Compile Include="Domain\FileSystemRenameEvent.cs" />
     <Compile Include="Domain\FileSystemEventQueueItem.cs" />
+    <Compile Include="FileSystem\Command\CommandBase.cs" />
+    <Compile Include="FileSystem\Command\CommandContext.cs" />
+    <Compile Include="FileSystem\Command\CommandResult.cs" />
+    <Compile Include="FileSystem\Command\ICommand.cs" />
+    <Compile Include="FileSystem\Command\IRedoCommand.cs" />
+    <Compile Include="FileSystem\Command\IUndoCommand.cs" />
     <Compile Include="FileSystem\FileSystemEventManager.cs" />
     <Compile Include="FileSystem\Handler\FolderEventHandler.cs" />
     <Compile Include="FileSystem\Handler\FileSystemEventHandlerFactory.cs" />
@@ -99,6 +105,7 @@
     <None Include="Installer\UnInstall.bat" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
