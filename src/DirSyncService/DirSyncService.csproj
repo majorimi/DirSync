@@ -83,6 +83,7 @@
     <Compile Include="Installer\DirSyncInstaller.Designer.cs">
       <DependentUpon>DirSyncInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Installer\WindwosServiceInstallerHelper.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Queue\Factory\Context\MsmqFactoryContext .cs" />

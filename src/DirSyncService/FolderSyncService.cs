@@ -4,6 +4,7 @@ using DirSyncService.Config;
 using DirSyncService.FileSystem.Handler;
 using DirSyncService.FileSystem;
 using DirSyncService.Logging;
+using DirSyncService.Installer;
 
 namespace DirSyncService
 {
@@ -12,7 +13,8 @@ namespace DirSyncService
 		private const int WaitTime = 10000;
 		private bool _isRunnig = false;
 		private readonly AutoResetEvent AutoReset = new AutoResetEvent(false);
-		private readonly FileSystemEventManager fileSystemEventManager;
+
+		private FileSystemEventManager fileSystemEventManager;
 
 	    public FolderSyncService()
 	    {
@@ -25,7 +27,6 @@ namespace DirSyncService
 #endif
 
             InitializeComponent();
-	        fileSystemEventManager = FileSystemEventHandlerFactory.Init();
 	    }
 
 	    public void Start()
@@ -41,7 +42,15 @@ namespace DirSyncService
 		{
 			if (DirSyncConfiguration.SourceDir.Exists && DirSyncConfiguration.TargetDir.Exists)
 			{
-			    Thread th = new Thread(Sync)
+				RequestAdditionalTime(6000);
+
+				//Check MSMQ
+				WindwosServiceInstallerHelper.CheckMsmqService();
+
+				fileSystemEventManager = FileSystemEventHandlerFactory.Init();
+
+
+				Thread th = new Thread(Sync)
 			    {
 			        IsBackground = true,
 			        Name = "FolderSyncService thread"
