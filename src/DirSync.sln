@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirSyncService", "DirSyncService\DirSyncService.csproj", "{28F623A3-770C-4F26-957C-A117FEFDD6CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirSync.Core", "DirSync.Core\DirSync.Core.csproj", "{C05EE4A4-BA47-4540-88F8-011BFF4FB4C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirSync.Core.Test", "DirSync.Core.Test\DirSync.Core.Test.csproj", "{62AB3BC5-E000-4399-987B-6DC64CD05195}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{28F623A3-770C-4F26-957C-A117FEFDD6CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28F623A3-770C-4F26-957C-A117FEFDD6CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28F623A3-770C-4F26-957C-A117FEFDD6CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05EE4A4-BA47-4540-88F8-011BFF4FB4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05EE4A4-BA47-4540-88F8-011BFF4FB4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05EE4A4-BA47-4540-88F8-011BFF4FB4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05EE4A4-BA47-4540-88F8-011BFF4FB4C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62AB3BC5-E000-4399-987B-6DC64CD05195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62AB3BC5-E000-4399-987B-6DC64CD05195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62AB3BC5-E000-4399-987B-6DC64CD05195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62AB3BC5-E000-4399-987B-6DC64CD05195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

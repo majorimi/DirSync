@@ -1,9 +1,9 @@
 ﻿using System.ServiceProcess;
 using System.Threading;
-using DirSyncService.Config;
-using DirSyncService.FileSystem.Handler;
-using DirSyncService.FileSystem;
-using DirSyncService.Logging;
+using DirSync.Core.Config;
+using DirSync.Core.FileSystem;
+using DirSync.Core.FileSystem.Handler;
+using DirSync.Core.Logging;
 using DirSyncService.Installer;
 
 namespace DirSyncService
