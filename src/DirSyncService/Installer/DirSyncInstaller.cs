@@ -23,7 +23,9 @@ namespace DirSyncService.Installer
             serviceInstaller = new ServiceInstaller();
 
             // The services run under the system account.
-            processInstaller.Account = ServiceAccount.LocalSystem;
+            processInstaller.Account = ServiceAccount.LocalService;
+			//processInstaller.Username = "";
+			//processInstaller.Password = "";
 
             // The services are started Automatic.
             serviceInstaller.StartType = ServiceStartMode.Automatic;
